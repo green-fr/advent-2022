@@ -3,6 +3,8 @@
 Created on Sat Dec 23 17:36:05 2023
 
 @author: green
+
+Very inefficient version
 """
 
 # Not finished
@@ -56,7 +58,7 @@ class BluePrint:
                 self.findBest(stock, speed, time, path + '.' * (neededTime - 1) + str(option))
             else:
                 stock = addStock(stock, speed, time)
-                print(path, stock[3])
+                # print(path, stock[3])
                 if (self.best < stock[3]):
                     self.best = stock[3]
                     self.bestPath = path
@@ -67,15 +69,15 @@ def payPrice(stock, price):
     return tuple(stocki - pricei for stocki, pricei in zip(stock, price))
 
 blueprints = []
-fileName = '19.input small.txt'
+fileName = '19.input.txt'
 with open(fileName, 'r') as file:
     for line in file:
         parsedLine = line.split(' ')
         blueprints.append(BluePrint(parsedLine))
 
-answer = 0
+answer = 1
 import time as t
-for i in range(len(blueprints)):
+for i in range(3):
     blueprint = blueprints[i]
     stock = (0, 0, 0, 0)
     speed = (1, 0, 0, 0)
@@ -84,7 +86,7 @@ for i in range(len(blueprints)):
     blueprint.findBest(stock, speed, time, '')
     end_time = t.time()
     print(blueprint.bestPath, blueprint.best)
-    answer += blueprint.best * blueprint.number
+    answer *= blueprint.best
     elapsed_time = end_time - start_time
     print("Time elapsed: {:.2f} seconds".format(elapsed_time))
 
